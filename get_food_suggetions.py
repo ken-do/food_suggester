@@ -66,4 +66,4 @@ if __name__ == "__main__":
     if( len(sys.argv) > 2 ):
         make_suggestion(sys.argv[1], sys.argv[2])
     else:
-        print('Please provide a command line using this format: python get_recipe_suggestions.py [input_file.csv] [out_file.csv]')
+        print('Please provide a command line using this format: python get_food_suggestions.py [input_file.csv] [out_file.csv]')
