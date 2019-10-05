@@ -24,7 +24,7 @@ def write_suggestions(suggestions, outFileName):
 
 def get_suggestions(input):
     
-    event_ingredients = np.array([input])
+    input_ingredients = np.array([input])
 
     url = "./data.csv"
     dataset = pandas.read_csv(url)
@@ -32,31 +32,31 @@ def get_suggestions(input):
     array = dataset.values
     
     ingredient_names = dataset.columns.values[:datashape[1] - 1]
-    recipe_names = array[1:,datashape[1] - 1]
+    food_names = array[1:,datashape[1] - 1]
     based_instances = array[1:,0:datashape[1] - 1]
 
-    return find_suggestions(based_instances, recipe_names, event_ingredients)
+    return find_suggestions(based_instances, food_names, input_ingredients)
 
 
-def find_suggestions(based_instances, recipe_names, event_ingredients):
+def find_suggestions(based_instances, food_names, input_ingredients):
     suggestions = {}
     for index, item in enumerate(based_instances):
         
-        recipe = recipe_names[index]
+        food = food_names[index]
         validation_item = item.reshape(1, -1)
 
-        has_not_allowed = check_not_allowed(validation_item, event_ingredients)
+        has_not_allowed = check_not_allowed(validation_item, input_ingredients)
 
         if(has_not_allowed):
             continue
         else:
-            suggestions[recipe] = cosine_similarity(event_ingredients, validation_item)[0][0]
+            suggestions[food] = cosine_similarity(input_ingredients, validation_item)[0][0]
     
     return sorted(suggestions.items(), key=lambda x: x[1], reverse=True)
 
 
-def check_not_allowed(validation_item, event_ingredients):
-    for index, attribute in enumerate(event_ingredients[0]):
+def check_not_allowed(validation_item, input_ingredients):
+    for index, attribute in enumerate(input_ingredients[0]):
         if(int(attribute) == 0 and int(validation_item[0][index]) == 1):
             return True
     return False

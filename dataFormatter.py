@@ -1,7 +1,7 @@
 def formatCSV():
     import csv
-    with open('foods_output.csv', 'w') as outfile:
-        with open('foods_input.csv', 'r') as infile:
+    with open('data.csv', 'w') as outfile:
+        with open('raw.csv', 'r') as infile:
             csv_reader = csv.reader(infile.read().splitlines())
             csv_writer = csv.writer(outfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             labels_row = writeCSVLabels(csv_reader) 
